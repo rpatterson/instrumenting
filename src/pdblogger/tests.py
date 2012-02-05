@@ -12,6 +12,7 @@ def test_suite():
     return doctest.DocFileSuite(
         'handler.rst',
         'filter.rst',
+        setUp=testing.setUp, tearDown=testing.tearDown,
         optionflags=(doctest.ELLIPSIS|doctest.REPORT_NDIFF))
         
 if __name__ == '__main__':
