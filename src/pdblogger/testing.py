@@ -4,6 +4,18 @@ import pdb
 logger = logging.getLogger('pdblogger.testing')
 
 
+def main(*args, **kw):
+    logger.debug('debug message')
+    logger.info('info message')
+    logger.warning('warning message')
+    logger.error('error message')
+    try:
+        raise ValueError('Forced program exception')
+    except:
+        logger.exception('exception message')
+    logger.critical('critical message')
+
+
 def logging_set_trace(*args, **kw):
     logger.debug('pdb.set_trace() called: %r, %r' % (args, kw))
 

@@ -29,6 +29,8 @@ and also logs an exception.
     WARNING pdblogger.testing warning message
     ERROR pdblogger.testing error message
     ERROR pdblogger.testing exception message
+    Traceback (most recent call last):
+    ValueError: Forced program exception
     CRITICAL pdblogger.testing critical message
     
 Configure a pdb logging handler that does post_mortem debugging of
@@ -54,6 +56,8 @@ as it did before.
     ERROR pdblogger.testing error message
     DEBUG pdblogger.testing pdb.Pdb.set_trace() called
     ERROR pdblogger.testing exception message
+    Traceback (most recent call last):
+    ValueError: Forced program exception
     DEBUG pdblogger.testing pdb.Pdb.interaction() called
     CRITICAL pdblogger.testing critical message
 
@@ -71,6 +75,8 @@ configured manually when instantiating the logger.
     ERROR pdblogger.testing error message
     DEBUG pdblogger.testing pdb.Pdb.set_trace() called
     ERROR pdblogger.testing exception message
+    Traceback (most recent call last):
+    ValueError: Forced program exception
     DEBUG pdblogger.testing pdb.Pdb.set_trace() called
     CRITICAL pdblogger.testing critical message
 
@@ -102,6 +108,8 @@ as it did before.
     ERROR pdblogger.testing error message
     DEBUG pdblogger.testing pdb.Pdb.set_trace() called
     ERROR pdblogger.testing exception message
+    Traceback (most recent call last):
+    ValueError: Forced program exception
     DEBUG pdblogger.testing pdb.Pdb.interaction() called
     CRITICAL pdblogger.testing critical message
 
@@ -121,6 +129,8 @@ as it did before.
     ERROR pdblogger.testing error message
     DEBUG pdblogger.testing pdb.Pdb.set_trace() called
     ERROR pdblogger.testing exception message
+    Traceback (most recent call last):
+    ValueError: Forced program exception
     DEBUG pdblogger.testing pdb.Pdb.interaction() called
     CRITICAL pdblogger.testing critical message
 
@@ -146,6 +156,8 @@ program execution also continues as it did before.
     Traceback (most recent call last):
     ValueError: pdblogger.testing set_trace forced exception
     ERROR pdblogger.testing exception message
+    Traceback (most recent call last):
+    ValueError: Forced program exception
     ERROR pdblogger.testing Exception while debugging:
     Traceback (most recent call last):
     ValueError: pdblogger.testing interaction forced exception
@@ -165,5 +177,7 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
     ERROR pdblogger.testing error message
     DEBUG pdblogger.testing not invoking set_trace, stdin is not a tty: .../tmp...
     ERROR pdblogger.testing exception message
+    Traceback (most recent call last):
+    ValueError: Forced program exception
     DEBUG pdblogger.testing not invoking interaction, stdin is not a tty: .../tmp...
     CRITICAL pdblogger.testing critical message
