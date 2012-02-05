@@ -88,10 +88,12 @@ as it did before.
 
     >>> pdb.set_trace = testing.quitting_set_trace
     >>> pdb.set_trace()
-    TODO
+    Traceback (most recent call last):
+    BdbQuit
     >>> pdb.post_mortem = testing.quitting_post_mortem
     >>> pdb.post_mortem()
-    TODO
+    Traceback (most recent call last):
+    BdbQuit
 
     >>> testing.main()
     DEBUG pdbhandler.testing debug message
@@ -105,10 +107,12 @@ as it did before.
 
     >>> pdb.set_trace = testing.interrupting_set_trace
     >>> pdb.set_trace()
-    TODO
+    Traceback (most recent call last):
+    KeyboardInterrupt
     >>> pdb.post_mortem = testing.interrupting_post_mortem
     >>> pdb.post_mortem()
-    TODO
+    Traceback (most recent call last):
+    KeyboardInterrupt
 
     >>> testing.main()
     DEBUG pdbhandler.testing debug message
