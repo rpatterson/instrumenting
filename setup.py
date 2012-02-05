@@ -15,8 +15,6 @@
 # along with this program; see the file COPYING. If not, write to the
 # Free Software Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-"""Python logging handler for invoking pdb on logging events."""
-
 import os
 import sys
 from setuptools import setup, find_packages
@@ -26,14 +24,14 @@ version = '0.1'
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 import pdblogger
 
-README = pdblogger.__doc__
+README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 HISTORY = open(os.path.join(os.path.dirname(__file__), 'HISTORY.txt')).read()
 
 tests_require = ['zope.testing']
 
 setup(name='pdblogger',
       version=version,
-      description=__doc__, 
+      description=pdblogger.__doc__,
       long_description=README+'\n\n'+HISTORY,
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
