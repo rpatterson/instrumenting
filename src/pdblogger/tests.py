@@ -8,7 +8,7 @@ except ImportError:
 
 def test_suite():
     return doctest.DocFileSuite(
-        'tests.txt',
+        'handler.rst',
         optionflags=(doctest.ELLIPSIS|doctest.REPORT_NDIFF))
         
 if __name__ == '__main__':
