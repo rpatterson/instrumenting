@@ -29,6 +29,8 @@ import pdblogger
 README = pdblogger.__doc__
 HISTORY = open(os.path.join(os.path.dirname(__file__), 'HISTORY.txt')).read()
 
+tests_require = ['zope.testing']
+
 setup(name='pdblogger',
       version=version,
       description=__doc__, 
@@ -51,6 +53,7 @@ setup(name='pdblogger',
           # -*- Extra requirements: -*-
       ],
       test_suite = "pdblogger.tests.test_suite",
+      extras_require={'test': tests_require},
       entry_points="""
       # -*- Entry points: -*-
       """,

@@ -1,5 +1,9 @@
 import unittest
-import doctest
+try:
+    from zope.testing import doctest
+    doctest  # pyflakes
+except ImportError:
+    import doctest
 
 
 def test_suite():
