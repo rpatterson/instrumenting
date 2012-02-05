@@ -5,6 +5,8 @@ try:
 except ImportError:
     import doctest
 
+from pdblogger import testing
+
 
 def test_suite():
     return doctest.DocFileSuite(
