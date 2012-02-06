@@ -51,6 +51,7 @@ setup(name='pdblogger',
           # -*- Extra requirements: -*-
       ],
       test_suite = "pdblogger.tests.test_suite",
+      tests_require=tests_require,
       extras_require={'test': tests_require},
       entry_points="""
       # -*- Entry points: -*-

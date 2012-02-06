@@ -15,23 +15,38 @@ message.
 
     >>> import pdb
     >>> pdb.set_trace()
-    DEBUG pdblogger.testing pdb.Pdb.set_trace() called
-    >>> pdb.post_mortem()
-    DEBUG pdblogger.testing pdb.Pdb.interaction() called
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    >>> testing_handler.clear()
+    >>> try:
+    ...     raise ValueError('Forced testing exception')
+    ... except:
+    ...     pdb.post_mortem()
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    >>> testing_handler.clear()
 
 Before a pdb logging handler is configued, logging events are just
 printed to stderr.  The program logs messages at all logging levels
 and also logs an exception.
 
     >>> testing.main()
-    DEBUG pdblogger.testing debug message
-    INFO pdblogger.testing info message
-    WARNING pdblogger.testing warning message
-    ERROR pdblogger.testing error message
-    ERROR pdblogger.testing exception message
-    Traceback (most recent call last):
-    ValueError: Forced program exception
-    CRITICAL pdblogger.testing critical message
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      debug message
+    pdblogger.testing INFO
+      info message
+    pdblogger.testing WARNING
+      warning message
+    pdblogger.testing ERROR
+      error message
+    pdblogger.testing ERROR
+      exception message: Forced program exception
+    pdblogger.testing CRITICAL
+      critical message
+    >>> testing_handler.clear()
     
 Configure a pdb logging handler that does post_mortem debugging of
 exceptions.
@@ -50,16 +65,24 @@ via the ``continue`` debuger command, the program execution continues
 as it did before.
 
     >>> testing.main()
-    DEBUG pdblogger.testing debug message
-    INFO pdblogger.testing info message
-    WARNING pdblogger.testing warning message
-    ERROR pdblogger.testing error message
-    DEBUG pdblogger.testing pdb.Pdb.set_trace() called
-    ERROR pdblogger.testing exception message
-    Traceback (most recent call last):
-    ValueError: Forced program exception
-    DEBUG pdblogger.testing pdb.Pdb.interaction() called
-    CRITICAL pdblogger.testing critical message
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      debug message
+    pdblogger.testing INFO
+      info message
+    pdblogger.testing WARNING
+      warning message
+    pdblogger.testing ERROR
+      error message
+    pdblogger.testing DEBUG
+      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    pdblogger.testing ERROR
+      exception message: Forced program exception
+    pdblogger.testing DEBUG
+      pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    pdblogger.testing CRITICAL
+      critical message
+    >>> testing_handler.clear()
 
 Whether to use ``set_trace()`` or ``post_mortem()`` can also be
 configured manually when instantiating the logger.
@@ -69,16 +92,24 @@ configured manually when instantiating the logger.
     >>> root.addHandler(handler)
 
     >>> testing.main()
-    DEBUG pdblogger.testing debug message
-    INFO pdblogger.testing info message
-    WARNING pdblogger.testing warning message
-    ERROR pdblogger.testing error message
-    DEBUG pdblogger.testing pdb.Pdb.set_trace() called
-    ERROR pdblogger.testing exception message
-    Traceback (most recent call last):
-    ValueError: Forced program exception
-    DEBUG pdblogger.testing pdb.Pdb.set_trace() called
-    CRITICAL pdblogger.testing critical message
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      debug message
+    pdblogger.testing INFO
+      info message
+    pdblogger.testing WARNING
+      warning message
+    pdblogger.testing ERROR
+      error message
+    pdblogger.testing DEBUG
+      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    pdblogger.testing ERROR
+      exception message: Forced program exception
+    pdblogger.testing DEBUG
+      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    pdblogger.testing CRITICAL
+      critical message
+    >>> testing_handler.clear()
 
 
 Error Handling
@@ -102,16 +133,24 @@ as it did before.
     BdbQuit
 
     >>> testing.main()
-    DEBUG pdblogger.testing debug message
-    INFO pdblogger.testing info message
-    WARNING pdblogger.testing warning message
-    ERROR pdblogger.testing error message
-    DEBUG pdblogger.testing pdb.Pdb.set_trace() called
-    ERROR pdblogger.testing exception message
-    Traceback (most recent call last):
-    ValueError: Forced program exception
-    DEBUG pdblogger.testing pdb.Pdb.interaction() called
-    CRITICAL pdblogger.testing critical message
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      debug message
+    pdblogger.testing INFO
+      info message
+    pdblogger.testing WARNING
+      warning message
+    pdblogger.testing ERROR
+      error message
+    pdblogger.testing DEBUG
+      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    pdblogger.testing ERROR
+      exception message: Forced program exception
+    pdblogger.testing DEBUG
+      pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    pdblogger.testing CRITICAL
+      critical message
+    >>> testing_handler.clear()
 
     >>> pdb.Pdb.set_trace = testing.interrupting_set_trace
     >>> pdb.set_trace()
@@ -123,16 +162,24 @@ as it did before.
     KeyboardInterrupt
 
     >>> testing.main()
-    DEBUG pdblogger.testing debug message
-    INFO pdblogger.testing info message
-    WARNING pdblogger.testing warning message
-    ERROR pdblogger.testing error message
-    DEBUG pdblogger.testing pdb.Pdb.set_trace() called
-    ERROR pdblogger.testing exception message
-    Traceback (most recent call last):
-    ValueError: Forced program exception
-    DEBUG pdblogger.testing pdb.Pdb.interaction() called
-    CRITICAL pdblogger.testing critical message
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      debug message
+    pdblogger.testing INFO
+      info message
+    pdblogger.testing WARNING
+      warning message
+    pdblogger.testing ERROR
+      error message
+    pdblogger.testing DEBUG
+      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    pdblogger.testing ERROR
+      exception message: Forced program exception
+    pdblogger.testing DEBUG
+      pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    pdblogger.testing CRITICAL
+      critical message
+    >>> testing_handler.clear()
 
 If invoking ``pdb`` or anything done in the debugger raises another
 error which causes the debugger to exit, details are logged but
@@ -148,20 +195,28 @@ program execution also continues as it did before.
     ValueError: pdblogger.testing interaction forced exception
 
     >>> testing.main()
-    DEBUG pdblogger.testing debug message
-    INFO pdblogger.testing info message
-    WARNING pdblogger.testing warning message
-    ERROR pdblogger.testing error message
-    ERROR pdblogger.testing Exception while debugging:
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      debug message
+    pdblogger.testing INFO
+      info message
+    pdblogger.testing WARNING
+      warning message
+    pdblogger.testing ERROR
+      error message
+    pdblogger.testing ERROR
+      Exception while debugging:
     Traceback (most recent call last):
     ValueError: pdblogger.testing set_trace forced exception
-    ERROR pdblogger.testing exception message
-    Traceback (most recent call last):
-    ValueError: Forced program exception
-    ERROR pdblogger.testing Exception while debugging:
+    pdblogger.testing ERROR
+      exception message: Forced program exception
+    pdblogger.testing ERROR
+      Exception while debugging:
     Traceback (most recent call last):
     ValueError: pdblogger.testing interaction forced exception
-    CRITICAL pdblogger.testing critical message
+    pdblogger.testing CRITICAL
+      critical message
+    >>> testing_handler.clear()
 
 If ``stdin`` and ``stdout`` are not real terminals and thus can't be
 used by the debugger, the pdb logging handler will not invoke ``pdb``:
@@ -171,13 +226,21 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
     >>> pdblogger.handler.stdin = tempfile.TemporaryFile()
 
     >>> testing.main()
-    DEBUG pdblogger.testing debug message
-    INFO pdblogger.testing info message
-    WARNING pdblogger.testing warning message
-    ERROR pdblogger.testing error message
-    DEBUG pdblogger.testing not invoking set_trace, stdin is not a tty: .../tmp...
-    ERROR pdblogger.testing exception message
-    Traceback (most recent call last):
-    ValueError: Forced program exception
-    DEBUG pdblogger.testing not invoking interaction, stdin is not a tty: .../tmp...
-    CRITICAL pdblogger.testing critical message
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      debug message
+    pdblogger.testing INFO
+      info message
+    pdblogger.testing WARNING
+      warning message
+    pdblogger.testing ERROR
+      error message
+    pdblogger.testing DEBUG
+      not invoking set_trace, stdin is not a tty: .../tmp...
+    pdblogger.testing ERROR
+      exception message: Forced program exception
+    pdblogger.testing DEBUG
+      not invoking interaction, stdin is not a tty: .../tmp...
+    pdblogger.testing CRITICAL
+      critical message
+    >>> testing_handler.clear()
