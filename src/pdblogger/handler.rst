@@ -15,18 +15,12 @@ message.
 
     >>> import pdb
     >>> pdb.set_trace()
-    >>> print testing_handler
-    pdblogger.testing DEBUG
-      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
-    >>> testing_handler.clear()
+    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
     >>> try:
     ...     raise ValueError('Forced testing exception')
     ... except:
     ...     pdb.post_mortem()
-    >>> print testing_handler
-    pdblogger.testing DEBUG
-      pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
-    >>> testing_handler.clear()
+    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
 
 Before a pdb logging handler is configued, logging events are just
 printed to stderr.  The program logs messages at all logging levels
@@ -74,12 +68,10 @@ as it did before.
       warning message
     pdblogger.testing ERROR
       error message
-    pdblogger.testing DEBUG
-      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
     pdblogger.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing DEBUG
-      pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     pdblogger.testing CRITICAL
       critical message
     >>> testing_handler.clear()
@@ -101,12 +93,10 @@ configured manually when instantiating the logger.
       warning message
     pdblogger.testing ERROR
       error message
-    pdblogger.testing DEBUG
-      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
     pdblogger.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing DEBUG
-      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
     pdblogger.testing CRITICAL
       critical message
     >>> testing_handler.clear()
@@ -142,12 +132,10 @@ as it did before.
       warning message
     pdblogger.testing ERROR
       error message
-    pdblogger.testing DEBUG
-      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
     pdblogger.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing DEBUG
-      pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     pdblogger.testing CRITICAL
       critical message
     >>> testing_handler.clear()
@@ -171,12 +159,10 @@ as it did before.
       warning message
     pdblogger.testing ERROR
       error message
-    pdblogger.testing DEBUG
-      pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
     pdblogger.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing DEBUG
-      pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     pdblogger.testing CRITICAL
       critical message
     >>> testing_handler.clear()

@@ -19,11 +19,11 @@ def main(*args, **kw):
 
 
 def logging_set_trace(*args, **kw):
-    logger.debug('pdb.set_trace() called: %r, %r' % (args, kw))
+    print 'TESTING pdb.set_trace() called: %r, %r' % (args, kw)
 
 
 def logging_interaction(*args, **kw):
-    logger.debug('pdb.interaction() called: %r, %r' % (args, kw))
+    print 'TESTING pdb.interaction() called: %r, %r' % (args, kw)
     
 
 def setUp(test):
