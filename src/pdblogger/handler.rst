@@ -81,11 +81,14 @@ did before.
 Whether to use ``set_trace()`` or ``post_mortem()`` can also be
 configured manually when instantiating the logger.
 
-    >>> root.removeLogger(handler)
+    >>> root.removeHandler(handler)
     >>> handler = pdblogger.PdbHandler(post_mortem=False)
     >>> root.addHandler(handler)
 
     >>> testing.main()
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
     pdblogger.testing DEBUG
       debug message
@@ -95,10 +98,8 @@ configured manually when instantiating the logger.
       warning message
     pdblogger.testing ERROR
       error message
-    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     pdblogger.testing ERROR
       exception message: Forced program exception
-    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     pdblogger.testing CRITICAL
       critical message
     >>> testing_handler.clear()
@@ -111,7 +112,7 @@ If ``pdb`` is exited either by the ``quit`` debugger command or via a
 keyboard interrupt (``Ctrl-C``), the program execution also continues
 as it did before.
 
-    >>> root.removeLogger(handler)
+    >>> root.removeHandler(handler)
     >>> handler = pdblogger.PdbHandler()
     >>> root.addHandler(handler)
 
@@ -125,6 +126,9 @@ as it did before.
     BdbQuit
 
     >>> testing.main()
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
+    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
     pdblogger.testing DEBUG
       debug message
@@ -134,10 +138,8 @@ as it did before.
       warning message
     pdblogger.testing ERROR
       error message
-    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     pdblogger.testing ERROR
       exception message: Forced program exception
-    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     pdblogger.testing CRITICAL
       critical message
     >>> testing_handler.clear()
@@ -152,6 +154,9 @@ as it did before.
     KeyboardInterrupt
 
     >>> testing.main()
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
+    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
     pdblogger.testing DEBUG
       debug message
@@ -161,10 +166,8 @@ as it did before.
       warning message
     pdblogger.testing ERROR
       error message
-    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     pdblogger.testing ERROR
       exception message: Forced program exception
-    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     pdblogger.testing CRITICAL
       critical message
     >>> testing_handler.clear()
