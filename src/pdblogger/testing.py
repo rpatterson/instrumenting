@@ -57,24 +57,30 @@ def excepting_set_trace(*args, **kw):
 def excepting_interaction(*args, **kw):
     logging_interaction(*args, **kw)
     raise ValueError('pdblogger.testing interaction forced exception')
+
+
+isatty_value = True
+def isatty(self):
+    return isatty_value
     
 
 def setUp(test):
-    doctest._SpoofOut.isatty = lambda self: True
     testing_handler = loggingsupport.InstalledHandler('pdblogger')
     test.globs.update(
         stdin=sys.stdin, stdout=sys.stdout,
+        orig_isatty=doctest._SpoofOut.isatty,
         orig_set_trace=pdb.Pdb.set_trace,
         orig_interaction=pdb.Pdb.interaction,
         logger=logger,
         testing_handler=testing_handler)
+    doctest._SpoofOut.isatty = isatty
     pdb.Pdb.set_trace = logging_set_trace
     pdb.Pdb.interaction = logging_interaction
     
     
 def tearDown(test):
-    sys.stdin = test.globs['stdin']
-    sys.stdout = test.globs['stdout']
     pdb.Pdb.set_trace = test.globs['orig_set_trace']
     pdb.Pdb.interaction = test.globs['orig_interaction']
-    doctest._SpoofOut.__dict__.pop('isatty', None)
+    doctest._SpoofOut.isatty = test.globs['orig_isatty']
+    test.globs['testing_handler'].uninstall()
+    

@@ -252,7 +252,7 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
     >>> testing_handler.clear()
 
     >>> sys.stdin = orig_stdin
-    >>> sys.stdout.isatty = lambda: False
+    >>> testing.isatty_value = False
     >>> root.removeHandler(handler)
     >>> handler = pdblogger.PdbHandler()
     >>> root.addHandler(handler)
