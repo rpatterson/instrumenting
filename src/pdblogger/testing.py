@@ -1,4 +1,5 @@
 import logging
+import bdb
 import pdb
 
 from zope.testing import loggingsupport
@@ -24,6 +25,16 @@ def logging_set_trace(*args, **kw):
 
 def logging_interaction(*args, **kw):
     print 'TESTING pdb.interaction() called: %r, %r' % (args, kw)
+
+
+def quitting_set_trace(*args, **kw):
+    logging_set_trace(*args, **kw)
+    raise bdb.BdbQuit()
+
+
+def quitting_interaction(*args, **kw):
+    logging_interaction(*args, **kw)
+    raise bdb.BdbQuit()
     
 
 def setUp(test):

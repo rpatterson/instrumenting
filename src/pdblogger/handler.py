@@ -1,5 +1,6 @@
 import sys
 import logging
+import bdb
 import pdb
 
 marker = object()
@@ -19,8 +20,14 @@ class PdbHandler(logging.Handler):
     def emit(self, record):
         self.pdb.reset()
         if self.post_mortem and record.exc_info:
-            self.pdb.interaction(None, record.exc_info[2])
+            try:
+                self.pdb.interaction(None, record.exc_info[2])
+            except bdb.BdbQuit:
+                pass
         else:
             frame = sys._getframe(6)
-            self.pdb.set_trace(frame)
+            try:
+                self.pdb.set_trace(frame)
+            except bdb.BdbQuit:
+                pass
 
