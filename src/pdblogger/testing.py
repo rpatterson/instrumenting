@@ -62,6 +62,7 @@ def excepting_interaction(*args, **kw):
 def setUp(test):
     testing_handler = loggingsupport.InstalledHandler('pdblogger')
     test.globs.update(
+        stdin=sys.stdin, stdout=sys.stdout,
         orig_set_trace=pdb.Pdb.set_trace,
         orig_interaction=pdb.Pdb.interaction,
         logger=logger,
@@ -69,8 +70,10 @@ def setUp(test):
     pdb.Pdb.set_trace = logging_set_trace
     pdb.Pdb.interaction = logging_interaction
     
-
+    
 def tearDown(test):
+    sys.stdin = test.globs['stdin']
+    sys.stdout = test.globs['stdout']
     pdb.Pdb.set_trace = test.globs['orig_set_trace']
     pdb.Pdb.interaction = test.globs['orig_interaction']
     doctest._SpoofOut.__dict__.pop('isatty', None)

@@ -226,6 +226,7 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
     >>> import sys
     >>> import tempfile
     >>> import pdblogger.handler
+    >>> orig_stdin = sys.stdin
     >>> sys.stdin = tempfile.TemporaryFile()
     >>> root.removeHandler(handler)
     >>> handler = pdblogger.PdbHandler()
@@ -251,4 +252,32 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
       critical message
     pdblogger ERROR
       Not invoking pdb, stdin is not a tty: <fdopen>
+    >>> testing_handler.clear()
+
+    >>> sys.stdin = orig_stdin
+    >>> sys.stdout.isatty = lambda: False
+    >>> root.removeHandler(handler)
+    >>> handler = pdblogger.PdbHandler()
+    >>> root.addHandler(handler)
+
+    >>> testing.main()
+    >>> print testing_handler
+    pdblogger.testing DEBUG
+      debug message
+    pdblogger.testing INFO
+      info message
+    pdblogger.testing WARNING
+      warning message
+    pdblogger.testing ERROR
+      error message
+    pdblogger ERROR
+      Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
+    pdblogger.testing ERROR
+      exception message: Forced program exception
+    pdblogger ERROR
+      Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
+    pdblogger.testing CRITICAL
+      critical message
+    pdblogger ERROR
+      Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
     >>> testing_handler.clear()
