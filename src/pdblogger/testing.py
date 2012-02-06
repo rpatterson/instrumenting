@@ -45,10 +45,20 @@ def interrupting_set_trace(*args, **kw):
 def interrupting_interaction(*args, **kw):
     logging_interaction(*args, **kw)
     raise KeyboardInterrupt()
+
+
+def excepting_set_trace(*args, **kw):
+    logging_set_trace(*args, **kw)
+    raise ValueError('pdblogger.testing set_trace forced exception')
+
+
+def excepting_interaction(*args, **kw):
+    logging_interaction(*args, **kw)
+    raise ValueError('pdblogger.testing interaction forced exception')
     
 
 def setUp(test):
-    testing_handler = loggingsupport.InstalledHandler('pdblogger.testing')
+    testing_handler = loggingsupport.InstalledHandler('pdblogger')
     test.globs.update(
         orig_set_trace=pdb.Pdb.set_trace,
         orig_interaction=pdb.Pdb.interaction,

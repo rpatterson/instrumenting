@@ -184,19 +184,18 @@ error which causes the debugger to exit, details are logged but
 program execution also continues as it did before.
 
     >>> pdb.Pdb.set_trace = testing.excepting_set_trace
-    >>> try:
-    ...     pdb.set_trace()
-    ... except KeyboardInterrupt:
-    ...     print 'TESTING interrupted'
-    TESTING interrupted
+    >>> pdb.set_trace()
+    Traceback (most recent call last):
+    ValueError: pdblogger.testing set_trace forced exception
     >>> pdb.Pdb.interaction = testing.excepting_interaction
-    >>> try:
-    ...     pdb.post_mortem()
-    ... except KeyboardInterrupt:
-    ...     print 'TESTING interrupted'
-    TESTING interrupted
+    >>> pdb.post_mortem()
+    Traceback (most recent call last):
+    ValueError: pdblogger.testing interaction forced exception
 
     >>> testing.main()
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
+    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
     pdblogger.testing DEBUG
       debug message
@@ -206,18 +205,16 @@ program execution also continues as it did before.
       warning message
     pdblogger.testing ERROR
       error message
-    pdblogger.testing ERROR
-      Exception while debugging:
-    Traceback (most recent call last):
-    ValueError: pdblogger.testing set_trace forced exception
+    pdblogger ERROR
+      Exception while debugging
     pdblogger.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing ERROR
-      Exception while debugging:
-    Traceback (most recent call last):
-    ValueError: pdblogger.testing interaction forced exception
+    pdblogger ERROR
+      Exception while debugging
     pdblogger.testing CRITICAL
       critical message
+    pdblogger ERROR
+      Exception while debugging
     >>> testing_handler.clear()
 
 If ``stdin`` and ``stdout`` are not real terminals and thus can't be
