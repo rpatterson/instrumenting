@@ -18,6 +18,7 @@ class PdbHandler(logging.Handler):
         if post_mortem is not marker:
             self.post_mortem = post_mortem
         self.pdb = pdb.Pdb()
+        self.recursion_filter = logging.Filter('pdblogger.recursion')
 
     def emit(self, record):
         self.pdb.reset()
@@ -35,10 +36,13 @@ class PdbHandler(logging.Handler):
         except (bdb.BdbQuit, KeyboardInterrupt):
             pass
         except BaseException:
-            disable_recursion = logging.Filter('pdblogger.recurse')
-            self.addFilter(disable_recursion)
-            try:
-                self.logger.exception('Exception while debugging')
-            finally:
-                self.removeFilter(disable_recursion)
-    
+            self.log(logging.ERROR, 'Exception while debugging',
+                     exc_info=sys.exc_info())
+
+    def log(self, level, msg, *args, **kw):
+        self.addFilter(self.recursion_filter)
+        try:
+            self.logger.log(level, msg, *args, **kw)
+        finally:
+            self.removeFilter(self.recursion_filter)
+        
