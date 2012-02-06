@@ -35,6 +35,16 @@ def quitting_set_trace(*args, **kw):
 def quitting_interaction(*args, **kw):
     logging_interaction(*args, **kw)
     raise bdb.BdbQuit()
+
+
+def interrupting_set_trace(*args, **kw):
+    logging_set_trace(*args, **kw)
+    raise KeyboardInterrupt()
+
+
+def interrupting_interaction(*args, **kw):
+    logging_interaction(*args, **kw)
+    raise KeyboardInterrupt()
     
 
 def setUp(test):

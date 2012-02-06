@@ -145,13 +145,20 @@ as it did before.
     >>> testing_handler.clear()
 
     >>> pdb.Pdb.set_trace = testing.interrupting_set_trace
-    >>> pdb.set_trace()
-    Traceback (most recent call last):
-    KeyboardInterrupt
+    >>> try:
+    ...     pdb.set_trace()
+    ... except KeyboardInterrupt:
+    ...     print 'TESTING interrupted'
+    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    TESTING interrupted
+    
     >>> pdb.Pdb.interaction = testing.interrupting_interaction
-    >>> pdb.post_mortem()
-    Traceback (most recent call last):
-    KeyboardInterrupt
+    >>> try:
+    ...     pdb.post_mortem()
+    ... except KeyboardInterrupt:
+    ...     print 'TESTING interrupted'
+    TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
+    TESTING interrupted
 
     >>> testing.main()
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
@@ -177,13 +184,17 @@ error which causes the debugger to exit, details are logged but
 program execution also continues as it did before.
 
     >>> pdb.Pdb.set_trace = testing.excepting_set_trace
-    >>> pdb.set_trace()
-    Traceback (most recent call last):
-    ValueError: pdblogger.testing set_trace forced exception
+    >>> try:
+    ...     pdb.set_trace()
+    ... except KeyboardInterrupt:
+    ...     print 'TESTING interrupted'
+    TESTING interrupted
     >>> pdb.Pdb.interaction = testing.excepting_interaction
-    >>> pdb.post_mortem()
-    Traceback (most recent call last):
-    ValueError: pdblogger.testing interaction forced exception
+    >>> try:
+    ...     pdb.post_mortem()
+    ... except KeyboardInterrupt:
+    ...     print 'TESTING interrupted'
+    TESTING interrupted
 
     >>> testing.main()
     >>> print testing_handler

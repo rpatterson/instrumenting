@@ -22,12 +22,12 @@ class PdbHandler(logging.Handler):
         if self.post_mortem and record.exc_info:
             try:
                 self.pdb.interaction(None, record.exc_info[2])
-            except bdb.BdbQuit:
+            except (bdb.BdbQuit, KeyboardInterrupt):
                 pass
         else:
             frame = sys._getframe(6)
             try:
                 self.pdb.set_trace(frame)
-            except bdb.BdbQuit:
+            except (bdb.BdbQuit, KeyboardInterrupt):
                 pass
 
