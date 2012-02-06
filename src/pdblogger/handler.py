@@ -21,29 +21,24 @@ class PdbHandler(logging.Handler):
 
     def emit(self, record):
         self.pdb.reset()
+        kw = {}
         if self.post_mortem and record.exc_info:
-            try:
-                self.pdb.interaction(None, record.exc_info[2])
-            except (bdb.BdbQuit, KeyboardInterrupt):
-                pass
-            except BaseException:
-                disable_recursion = logging.Filter('pdblogger.recurse')
-                self.addFilter(disable_recursion)
-                try:
-                    self.logger.exception('Exception while debugging')
-                finally:
-                    self.removeFilter(disable_recursion)
+            func = self.pdb.interaction
+            args = (None, record.exc_info[2])
         else:
             frame = sys._getframe(6)
+            func = self.pdb.set_trace
+            args = (frame, )
+
+        try:
+            func(*args, **kw)
+        except (bdb.BdbQuit, KeyboardInterrupt):
+            pass
+        except BaseException:
+            disable_recursion = logging.Filter('pdblogger.recurse')
+            self.addFilter(disable_recursion)
             try:
-                self.pdb.set_trace(frame)
-            except (bdb.BdbQuit, KeyboardInterrupt):
-                pass
-            except BaseException:
-                disable_recursion = logging.Filter('pdblogger.recurse')
-                self.addFilter(disable_recursion)
-                try:
-                    self.logger.exception('Exception while debugging')
-                finally:
-                    self.removeFilter(disable_recursion)
+                self.logger.exception('Exception while debugging')
+            finally:
+                self.removeFilter(disable_recursion)
     
