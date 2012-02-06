@@ -3,20 +3,15 @@ import logging
 import bdb
 import pdb
 
-marker = object()
-
 
 class PdbHandler(logging.Handler):
     """Python logging handler for invoking pdb on logging events."""
 
     logger = logging.getLogger('pdblogger')
 
-    post_mortem = True
-
-    def __init__(self, level=logging.ERROR, post_mortem=marker):
+    def __init__(self, level=logging.ERROR, post_mortem=True):
         super(PdbHandler, self).__init__(level=level)
-        if post_mortem is not marker:
-            self.post_mortem = post_mortem
+        self.post_mortem = post_mortem
         self.pdb = pdb.Pdb()
         self.recursion_filter = logging.Filter('pdblogger.recursion')
 
