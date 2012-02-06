@@ -6,6 +6,9 @@ import pdb
 from zope.testing import loggingsupport
 from zope.testing import doctest
 
+import pdblogger
+
+root = logging.getLogger()
 logger = logging.getLogger('pdblogger.testing')
 
 
@@ -79,8 +82,12 @@ def setUp(test):
     
     
 def tearDown(test):
+    for handler in root.handlers:
+        if isinstance(handler, pdblogger.PdbHandler):
+            root.removeHandler(handler)
     pdb.Pdb.set_trace = test.globs['orig_set_trace']
     pdb.Pdb.interaction = test.globs['orig_interaction']
     doctest._SpoofOut.isatty = test.globs['orig_isatty']
     test.globs['testing_handler'].uninstall()
-    
+    global isatty_value
+    isatty_value = True
