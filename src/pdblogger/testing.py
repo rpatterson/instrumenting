@@ -1,8 +1,10 @@
+import sys
 import logging
 import bdb
 import pdb
 
 from zope.testing import loggingsupport
+from zope.testing import doctest
 
 logger = logging.getLogger('pdblogger.testing')
 
@@ -71,3 +73,4 @@ def setUp(test):
 def tearDown(test):
     pdb.Pdb.set_trace = test.globs['orig_set_trace']
     pdb.Pdb.interaction = test.globs['orig_interaction']
+    doctest._SpoofOut.__dict__.pop('isatty', None)

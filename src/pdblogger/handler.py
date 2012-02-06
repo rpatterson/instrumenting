@@ -21,6 +21,16 @@ class PdbHandler(logging.Handler):
         self.recursion_filter = logging.Filter('pdblogger.recursion')
 
     def emit(self, record):
+        for attr in ('stdin', 'stdout'):
+            tty = getattr(self.pdb, attr)
+            if not (hasattr(tty, 'isatty')
+                    and tty.isatty()):
+                self.log(
+                    logging.ERROR,
+                    'Not invoking pdb, %s is not a tty: %s'
+                    % (attr, getattr(tty, 'name', tty)))
+                return
+        
         self.pdb.reset()
         kw = {}
         if self.post_mortem and record.exc_info:

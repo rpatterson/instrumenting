@@ -51,6 +51,9 @@ exceptions.
     >>> handler = pdblogger.PdbHandler()
     >>> root.addHandler(handler)
 
+    >>> from zope.testing import doctest
+    >>> doctest._SpoofOut.isatty = lambda self: True
+
 Now the program still prints messages to stderr but also invokes
 ``pdb`` for ``post_mortem`` debugging of the exception.  By default,
 the handler will use ``post_mortem()`` if exception information is
@@ -220,9 +223,13 @@ program execution also continues as it did before.
 If ``stdin`` and ``stdout`` are not real terminals and thus can't be
 used by the debugger, the pdb logging handler will not invoke ``pdb``:
 
-    >>> import pdblogger.handler
+    >>> import sys
     >>> import tempfile
-    >>> pdblogger.handler.stdin = tempfile.TemporaryFile()
+    >>> import pdblogger.handler
+    >>> sys.stdin = tempfile.TemporaryFile()
+    >>> root.removeHandler(handler)
+    >>> handler = pdblogger.PdbHandler()
+    >>> root.addHandler(handler)
 
     >>> testing.main()
     >>> print testing_handler
@@ -234,12 +241,14 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
       warning message
     pdblogger.testing ERROR
       error message
-    pdblogger.testing DEBUG
-      not invoking set_trace, stdin is not a tty: .../tmp...
+    pdblogger ERROR
+      Not invoking pdb, stdin is not a tty: <fdopen>
     pdblogger.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing DEBUG
-      not invoking interaction, stdin is not a tty: .../tmp...
+    pdblogger ERROR
+      Not invoking pdb, stdin is not a tty: <fdopen>
     pdblogger.testing CRITICAL
       critical message
+    pdblogger ERROR
+      Not invoking pdb, stdin is not a tty: <fdopen>
     >>> testing_handler.clear()
