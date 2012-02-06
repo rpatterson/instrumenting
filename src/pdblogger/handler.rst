@@ -51,9 +51,6 @@ exceptions.
     >>> handler = pdblogger.PdbHandler()
     >>> root.addHandler(handler)
 
-    >>> from zope.testing import doctest
-    >>> doctest._SpoofOut.isatty = lambda self: True
-
 Now the program still prints messages to stderr but also invokes
 ``pdb`` for ``post_mortem`` debugging of the exception.  By default,
 the handler will use ``post_mortem()`` if exception information is

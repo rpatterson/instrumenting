@@ -60,6 +60,7 @@ def excepting_interaction(*args, **kw):
     
 
 def setUp(test):
+    doctest._SpoofOut.isatty = lambda self: True
     testing_handler = loggingsupport.InstalledHandler('pdblogger')
     test.globs.update(
         stdin=sys.stdin, stdout=sys.stdout,
