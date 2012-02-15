@@ -10,7 +10,7 @@ Start with a Python program we want to debug with ``pdb``.
     >>> testing.main
     <function main at 0x...>
 
-For testing ``set_trace()`` and ``post_mortem`` both just log a
+For testing ``set_trace()`` and ``post_mortem()`` both just log a
 message.
 
     >>> import pdb
@@ -52,8 +52,8 @@ exceptions.
     >>> root.addHandler(handler)
 
 Now the program still prints messages to stderr but also invokes
-``pdb`` for ``post_mortem`` debugging of the exception.  By default,
-the handler will use ``post_mortem()`` if exception information is
+``pdb`` for post mortem debugging of the exception.  By default, the
+handler will use ``post_mortem()`` if exception information is
 available and ``set_trace()`` if not.  The handler also defaults to
 the ``ERROR`` logging level.  After the debugger is exited via the
 ``continue`` debuger command, the program execution continues as it
