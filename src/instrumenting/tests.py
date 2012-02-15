@@ -5,12 +5,12 @@ try:
 except ImportError:
     import doctest
 
-from pdblogger import testing
+from instrumenting import testing
 
 
 def test_suite():
     return doctest.DocFileSuite(
-        'handler.rst',
+        'pdbhandler.rst',
         'filter.rst',
         setUp=testing.setUp, tearDown=testing.tearDown,
         optionflags=(doctest.ELLIPSIS|doctest.REPORT_NDIFF))

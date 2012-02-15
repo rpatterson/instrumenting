@@ -22,26 +22,26 @@ from setuptools import setup, find_packages
 version = '0.1'
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-import pdblogger
+import instrumenting
 
 README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
 HISTORY = open(os.path.join(os.path.dirname(__file__), 'HISTORY.txt')).read()
 
 tests_require = ['zope.testing']
 
-setup(name='pdblogger',
+setup(name='instrumenting',
       version=version,
-      description=pdblogger.__doc__,
+      description=instrumenting.__doc__,
       long_description=README+'\n\n'+HISTORY,
       # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
         ],
-      keywords='pdb',
+      keywords='pdb logging Python',
       author='Ross Patterson',
       author_email='me@rpatterson.net',
-      url='http://github.com/rpatterson/pdblogger',
+      url='http://github.com/rpatterson/instrumenting',
       license='GPL',
       packages=find_packages('src', exclude=['ez_setup']),
       package_dir={'': 'src'},
@@ -50,7 +50,7 @@ setup(name='pdblogger',
           'setuptools',
           # -*- Extra requirements: -*-
       ],
-      test_suite = "pdblogger.tests.test_suite",
+      test_suite = "instrumenting.tests.test_suite",
       tests_require=tests_require,
       extras_require={'test': tests_require},
       entry_points="""

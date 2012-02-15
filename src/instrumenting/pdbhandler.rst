@@ -1,12 +1,12 @@
 .. -*-doctest-*-
 
-=========
-PdbLogger
-=========
+===================
+Pdb Logging Handler
+===================
 
 Start with a Python program we want to debug with ``pdb``.
 
-    >>> from pdblogger import testing
+    >>> from instrumenting import testing
     >>> testing.main
     <function main at 0x...>
 
@@ -28,17 +28,17 @@ and also logs an exception.
 
     >>> testing.main()
     >>> print testing_handler
-    pdblogger.testing DEBUG
+    instrumenting.testing DEBUG
       debug message
-    pdblogger.testing INFO
+    instrumenting.testing INFO
       info message
-    pdblogger.testing WARNING
+    instrumenting.testing WARNING
       warning message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       error message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing CRITICAL
+    instrumenting.testing CRITICAL
       critical message
     >>> testing_handler.clear()
     
@@ -46,9 +46,9 @@ Configure a pdb logging handler that does post_mortem debugging of
 exceptions.
 
     >>> import logging
-    >>> import pdblogger
+    >>> import instrumenting
     >>> root = logging.getLogger()
-    >>> handler = pdblogger.PdbHandler()
+    >>> handler = instrumenting.PdbHandler()
     >>> root.addHandler(handler)
 
 Now the program still prints messages to stderr but also invokes
@@ -64,17 +64,17 @@ did before.
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
-    pdblogger.testing DEBUG
+    instrumenting.testing DEBUG
       debug message
-    pdblogger.testing INFO
+    instrumenting.testing INFO
       info message
-    pdblogger.testing WARNING
+    instrumenting.testing WARNING
       warning message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       error message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing CRITICAL
+    instrumenting.testing CRITICAL
       critical message
     >>> testing_handler.clear()
 
@@ -82,7 +82,7 @@ Whether to use ``set_trace()`` or ``post_mortem()`` can also be
 configured manually when instantiating the logger.
 
     >>> root.removeHandler(handler)
-    >>> handler = pdblogger.PdbHandler(post_mortem=False)
+    >>> handler = instrumenting.PdbHandler(post_mortem=False)
     >>> root.addHandler(handler)
 
     >>> testing.main()
@@ -90,17 +90,17 @@ configured manually when instantiating the logger.
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
-    pdblogger.testing DEBUG
+    instrumenting.testing DEBUG
       debug message
-    pdblogger.testing INFO
+    instrumenting.testing INFO
       info message
-    pdblogger.testing WARNING
+    instrumenting.testing WARNING
       warning message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       error message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing CRITICAL
+    instrumenting.testing CRITICAL
       critical message
     >>> testing_handler.clear()
 
@@ -113,7 +113,7 @@ keyboard interrupt (``Ctrl-C``), the program execution also continues
 as it did before.
 
     >>> root.removeHandler(handler)
-    >>> handler = pdblogger.PdbHandler()
+    >>> handler = instrumenting.PdbHandler()
     >>> root.addHandler(handler)
 
     >>> pdb.Pdb.set_trace = testing.quitting_set_trace
@@ -130,17 +130,17 @@ as it did before.
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
-    pdblogger.testing DEBUG
+    instrumenting.testing DEBUG
       debug message
-    pdblogger.testing INFO
+    instrumenting.testing INFO
       info message
-    pdblogger.testing WARNING
+    instrumenting.testing WARNING
       warning message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       error message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing CRITICAL
+    instrumenting.testing CRITICAL
       critical message
     >>> testing_handler.clear()
 
@@ -165,17 +165,17 @@ as it did before.
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
-    pdblogger.testing DEBUG
+    instrumenting.testing DEBUG
       debug message
-    pdblogger.testing INFO
+    instrumenting.testing INFO
       info message
-    pdblogger.testing WARNING
+    instrumenting.testing WARNING
       warning message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       error message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       exception message: Forced program exception
-    pdblogger.testing CRITICAL
+    instrumenting.testing CRITICAL
       critical message
     >>> testing_handler.clear()
 
@@ -186,34 +186,34 @@ program execution also continues as it did before.
     >>> pdb.Pdb.set_trace = testing.excepting_set_trace
     >>> pdb.set_trace()
     Traceback (most recent call last):
-    ValueError: pdblogger.testing set_trace forced exception
+    ValueError: instrumenting.testing set_trace forced exception
     >>> pdb.Pdb.interaction = testing.excepting_interaction
     >>> pdb.post_mortem()
     Traceback (most recent call last):
-    ValueError: pdblogger.testing interaction forced exception
+    ValueError: instrumenting.testing interaction forced exception
 
     >>> testing.main()
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     >>> print testing_handler
-    pdblogger.testing DEBUG
+    instrumenting.testing DEBUG
       debug message
-    pdblogger.testing INFO
+    instrumenting.testing INFO
       info message
-    pdblogger.testing WARNING
+    instrumenting.testing WARNING
       warning message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       error message
-    pdblogger ERROR
+    instrumenting ERROR
       Exception while debugging
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       exception message: Forced program exception
-    pdblogger ERROR
+    instrumenting ERROR
       Exception while debugging
-    pdblogger.testing CRITICAL
+    instrumenting.testing CRITICAL
       critical message
-    pdblogger ERROR
+    instrumenting ERROR
       Exception while debugging
     >>> testing_handler.clear()
 
@@ -222,59 +222,58 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
 
     >>> import sys
     >>> import tempfile
-    >>> import pdblogger.handler
     >>> orig_stdin = sys.stdin
     >>> sys.stdin = tempfile.TemporaryFile()
     >>> root.removeHandler(handler)
-    >>> handler = pdblogger.PdbHandler()
+    >>> handler = instrumenting.PdbHandler()
     >>> root.addHandler(handler)
 
     >>> testing.main()
     >>> print testing_handler
-    pdblogger.testing DEBUG
+    instrumenting.testing DEBUG
       debug message
-    pdblogger.testing INFO
+    instrumenting.testing INFO
       info message
-    pdblogger.testing WARNING
+    instrumenting.testing WARNING
       warning message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       error message
-    pdblogger ERROR
+    instrumenting ERROR
       Not invoking pdb, stdin is not a tty: <fdopen>
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       exception message: Forced program exception
-    pdblogger ERROR
+    instrumenting ERROR
       Not invoking pdb, stdin is not a tty: <fdopen>
-    pdblogger.testing CRITICAL
+    instrumenting.testing CRITICAL
       critical message
-    pdblogger ERROR
+    instrumenting ERROR
       Not invoking pdb, stdin is not a tty: <fdopen>
     >>> testing_handler.clear()
 
     >>> sys.stdin = orig_stdin
     >>> testing.isatty_value = False
     >>> root.removeHandler(handler)
-    >>> handler = pdblogger.PdbHandler()
+    >>> handler = instrumenting.PdbHandler()
     >>> root.addHandler(handler)
 
     >>> testing.main()
     >>> print testing_handler
-    pdblogger.testing DEBUG
+    instrumenting.testing DEBUG
       debug message
-    pdblogger.testing INFO
+    instrumenting.testing INFO
       info message
-    pdblogger.testing WARNING
+    instrumenting.testing WARNING
       warning message
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       error message
-    pdblogger ERROR
+    instrumenting ERROR
       Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
-    pdblogger.testing ERROR
+    instrumenting.testing ERROR
       exception message: Forced program exception
-    pdblogger ERROR
+    instrumenting ERROR
       Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
-    pdblogger.testing CRITICAL
+    instrumenting.testing CRITICAL
       critical message
-    pdblogger ERROR
+    instrumenting ERROR
       Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
     >>> testing_handler.clear()

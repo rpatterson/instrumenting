@@ -6,10 +6,10 @@ import pdb
 from zope.testing import loggingsupport
 from zope.testing import doctest
 
-import pdblogger
+import instrumenting
 
 root = logging.getLogger()
-logger = logging.getLogger('pdblogger.testing')
+logger = logging.getLogger('instrumenting.testing')
 
 
 def main(*args, **kw):
@@ -54,12 +54,12 @@ def interrupting_interaction(*args, **kw):
 
 def excepting_set_trace(*args, **kw):
     logging_set_trace(*args, **kw)
-    raise ValueError('pdblogger.testing set_trace forced exception')
+    raise ValueError('instrumenting.testing set_trace forced exception')
 
 
 def excepting_interaction(*args, **kw):
     logging_interaction(*args, **kw)
-    raise ValueError('pdblogger.testing interaction forced exception')
+    raise ValueError('instrumenting.testing interaction forced exception')
 
 
 isatty_value = True
@@ -68,7 +68,7 @@ def isatty(self):
     
 
 def setUp(test):
-    testing_handler = loggingsupport.InstalledHandler('pdblogger')
+    testing_handler = loggingsupport.InstalledHandler('instrumenting')
     test.globs.update(
         stdin=sys.stdin, stdout=sys.stdout,
         orig_isatty=doctest._SpoofOut.isatty,
@@ -83,7 +83,7 @@ def setUp(test):
     
 def tearDown(test):
     for handler in root.handlers:
-        if isinstance(handler, pdblogger.PdbHandler):
+        if isinstance(handler, instrumenting.PdbHandler):
             root.removeHandler(handler)
     pdb.Pdb.set_trace = test.globs['orig_set_trace']
     pdb.Pdb.interaction = test.globs['orig_interaction']

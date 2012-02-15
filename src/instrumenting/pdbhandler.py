@@ -7,13 +7,13 @@ import pdb
 class PdbHandler(logging.Handler):
     """Python logging handler for invoking pdb on logging events."""
 
-    logger = logging.getLogger('pdblogger')
+    logger = logging.getLogger('instrumenting')
 
     def __init__(self, level=logging.ERROR, post_mortem=True):
         super(PdbHandler, self).__init__(level=level)
         self.post_mortem = post_mortem
         self.pdb = pdb.Pdb()
-        self.recursion_filter = logging.Filter('pdblogger.recursion')
+        self.recursion_filter = logging.Filter('instrumenting.recursion')
 
     def emit(self, record):
         for attr in ('stdin', 'stdout'):
