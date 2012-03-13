@@ -15,7 +15,7 @@ message.
 
     >>> import pdb
     >>> pdb.set_trace()
-    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    TESTING pdb.set_trace() called: (<...doctest._OutputRedirectingPdb instance at 0x...>, <frame object at 0x...>), {}
     >>> try:
     ...     raise ValueError('Forced testing exception')
     ... except:
@@ -149,7 +149,7 @@ as it did before.
     ...     pdb.set_trace()
     ... except KeyboardInterrupt:
     ...     print 'TESTING interrupted'
-    TESTING pdb.set_trace() called: (<zope.testing.doctest._OutputRedirectingPdb instance at 0x...>,), {}
+    TESTING pdb.set_trace() called: (<...doctest._OutputRedirectingPdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING interrupted
     
     >>> pdb.Pdb.interaction = testing.interrupting_interaction
@@ -267,13 +267,13 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
     instrumenting.testing ERROR
       error message
     instrumenting ERROR
-      Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
+      Not invoking pdb, stdout is not a tty: <...doctest..._SpoofOut instance at 0x...>
     instrumenting.testing ERROR
       exception message: Forced program exception
     instrumenting ERROR
-      Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
+      Not invoking pdb, stdout is not a tty: <...doctest..._SpoofOut instance at 0x...>
     instrumenting.testing CRITICAL
       critical message
     instrumenting ERROR
-      Not invoking pdb, stdout is not a tty: <zope.testing.doctest._SpoofOut instance at 0x...>
+      Not invoking pdb, stdout is not a tty: <...doctest..._SpoofOut instance at 0x...>
     >>> testing_handler.clear()

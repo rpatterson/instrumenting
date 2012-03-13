@@ -6,9 +6,14 @@ import pdb
 import threading
 
 from zope.testing import loggingsupport
-from zope.testing import doctest
 
 import instrumenting
+
+try:
+    from doctest import _SpoofOut
+    _SpoofOut  # pyflakes
+except:
+    from zope.testing.doctest import _SpoofOut
 
 root = logging.getLogger()
 logger = logging.getLogger('instrumenting.testing')
@@ -67,19 +72,18 @@ def excepting_interaction(*args, **kw):
 isatty_value = True
 def isatty(self):
     return isatty_value
-    
 
 
 def setUpPdb(test):
     testing_handler = loggingsupport.InstalledHandler('instrumenting')
     test.globs.update(
         stdin=sys.stdin, stdout=sys.stdout,
-        orig_isatty=doctest._SpoofOut.isatty,
+        orig_isatty=_SpoofOut.isatty,
         orig_set_trace=pdb.Pdb.set_trace,
         orig_interaction=pdb.Pdb.interaction,
         logger=logger,
         testing_handler=testing_handler)
-    doctest._SpoofOut.isatty = isatty
+    _SpoofOut.isatty = isatty
     pdb.Pdb.set_trace = logging_set_trace
     pdb.Pdb.interaction = logging_interaction
     
@@ -90,7 +94,7 @@ def tearDownPdb(test):
             root.removeHandler(handler)
     pdb.Pdb.set_trace = test.globs['orig_set_trace']
     pdb.Pdb.interaction = test.globs['orig_interaction']
-    doctest._SpoofOut.isatty = test.globs['orig_isatty']
+    _SpoofOut.isatty = test.globs['orig_isatty']
     test.globs['testing_handler'].uninstall()
     global isatty_value
     isatty_value = True
