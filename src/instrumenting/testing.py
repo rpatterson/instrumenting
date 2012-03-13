@@ -1,7 +1,9 @@
 import sys
 import logging
+import tempfile
 import bdb
 import pdb
+import threading
 
 from zope.testing import loggingsupport
 from zope.testing import doctest
@@ -67,7 +69,8 @@ def isatty(self):
     return isatty_value
     
 
-def setUp(test):
+
+def setUpPdb(test):
     testing_handler = loggingsupport.InstalledHandler('instrumenting')
     test.globs.update(
         stdin=sys.stdin, stdout=sys.stdout,
@@ -81,7 +84,7 @@ def setUp(test):
     pdb.Pdb.interaction = logging_interaction
     
     
-def tearDown(test):
+def tearDownPdb(test):
     for handler in root.handlers:
         if isinstance(handler, instrumenting.PdbHandler):
             root.removeHandler(handler)
@@ -91,3 +94,93 @@ def tearDown(test):
     test.globs['testing_handler'].uninstall()
     global isatty_value
     isatty_value = True
+
+
+import traceback
+
+class StackCondition(object):
+
+    def __init__(self, print_stack=False):
+        self.print_stack = print_stack
+        self.condition = threading.Condition()
+
+    def debug(self):
+        if not self.print_stack:
+            return
+        frame = sys._getframe(2)
+        traceback.print_stack(frame, limit=1)
+
+    def acquire(self):
+        self.debug()
+        return self.condition.acquire()
+
+    def release(self):
+        self.debug()
+        return self.condition.release()
+
+    def wait(self):
+        self.debug()
+        return self.condition.wait()
+
+    def notify(self):
+        self.debug()
+        return self.condition.notify()
+
+    def handoff(self):
+        self.debug()
+        self.condition.notify()
+        self.condition.wait()
+
+
+thread_sync = StackCondition()
+
+
+def threaded_inner_main(*args, **kw):
+    thread_sync.acquire()
+    logger.debug('debug message')
+    logger.info('info message')
+    thread_sync.handoff()
+    logger.warning('warning message')
+    thread_sync.handoff()
+    logger.error('error message')
+    thread_sync.handoff()
+    thread_sync.release()
+    try:
+        raise ValueError('Forced program exception')
+    except BaseException, e:
+        logger.exception('exception message: %s' % e)
+    logger.critical('critical message')
+
+
+def threaded_inner_other():
+    thread_sync.acquire()
+    logger.info('other thread info message')
+    thread_sync.handoff()
+    logger.warning('other thread warning message')
+    thread_sync.handoff()
+    logger.error('other thread error message')
+    thread_sync.notify()
+    thread_sync.release()
+
+
+def threaded_main():
+    profiled = threading.Thread(target=threaded_inner_main)
+    other = threading.Thread(target=threaded_inner_other)
+    thread_sync.acquire()
+    profiled.start()
+    thread_sync.wait()
+    other.start()
+    thread_sync.release()
+    profiled.join(), other.join()
+
+
+def setUpProfiling(test):
+    testing_handler = loggingsupport.InstalledHandler('instrumenting')
+    test.globs.update(logger=logger, testing_handler=testing_handler,
+                      tmp=tempfile.mkdtemp())
+
+
+def tearDownProfiling(test):
+    for handler in root.handlers:
+        if isinstance(handler, instrumenting.ProfilingHandler):
+            root.removeHandler(handler)

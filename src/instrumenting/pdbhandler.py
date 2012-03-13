@@ -3,17 +3,16 @@ import logging
 import bdb
 import pdb
 
+from instrumenting import utils
 
-class PdbHandler(logging.Handler):
+
+class PdbHandler(utils.InstrumentingHandler):
     """Python logging handler for invoking pdb on logging events."""
 
-    logger = logging.getLogger('instrumenting')
-
     def __init__(self, level=logging.ERROR, post_mortem=True):
-        super(PdbHandler, self).__init__(level=level)
+        utils.InstrumentingHandler.__init__(self, level=level)
         self.post_mortem = post_mortem
         self.pdb = pdb.Pdb()
-        self.recursion_filter = logging.Filter('instrumenting.recursion')
 
     def emit(self, record):
         for attr in ('stdin', 'stdout'):
@@ -43,11 +42,4 @@ class PdbHandler(logging.Handler):
         except BaseException:
             self.log(logging.ERROR, 'Exception while debugging',
                      exc_info=sys.exc_info())
-
-    def log(self, level, msg, *args, **kw):
-        self.addFilter(self.recursion_filter)
-        try:
-            self.logger.log(level, msg, *args, **kw)
-        finally:
-            self.removeFilter(self.recursion_filter)
         
