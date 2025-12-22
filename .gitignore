@@ -1,3 +1,6 @@
+# Common backup files suffix:
+*~
+
 # tox testing artifacts
 /.eggs
 /.tox

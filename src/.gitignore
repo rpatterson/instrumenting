@@ -1,0 +1,4 @@
+# Python byte-compiled files:
+*.py[co]
+__pycache__
+*.egg-info
