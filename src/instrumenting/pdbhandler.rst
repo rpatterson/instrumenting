@@ -27,7 +27,7 @@ printed to stderr.  The program logs messages at all logging levels
 and also logs an exception.
 
     >>> testing.main()
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -63,7 +63,7 @@ did before.
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -89,7 +89,7 @@ configured manually when instantiating the logger.
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -129,7 +129,7 @@ as it did before.
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -148,7 +148,7 @@ as it did before.
     >>> try:
     ...     pdb.set_trace()
     ... except KeyboardInterrupt:
-    ...     print 'TESTING interrupted'
+    ...     print('TESTING interrupted')
     TESTING pdb.set_trace() called: (<...doctest._OutputRedirectingPdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING interrupted
     
@@ -156,7 +156,7 @@ as it did before.
     >>> try:
     ...     pdb.post_mortem()
     ... except KeyboardInterrupt:
-    ...     print 'TESTING interrupted'
+    ...     print('TESTING interrupted')
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING interrupted
 
@@ -164,7 +164,7 @@ as it did before.
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -196,7 +196,7 @@ program execution also continues as it did before.
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -229,7 +229,7 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
     >>> root.addHandler(handler)
 
     >>> testing.main()
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -257,7 +257,7 @@ used by the debugger, the pdb logging handler will not invoke ``pdb``:
     >>> root.addHandler(handler)
 
     >>> testing.main()
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO

@@ -1,19 +1,13 @@
 import sys
+import traceback
 import logging
 import tempfile
 import bdb
 import pdb
 import threading
-
-from zope.testing import loggingsupport
+from doctest import _SpoofOut
 
 import instrumenting
-
-try:
-    from doctest import _SpoofOut
-    _SpoofOut  # pyflakes
-except:
-    from zope.testing.doctest import _SpoofOut
 
 root = logging.getLogger()
 logger = logging.getLogger('instrumenting.testing')
@@ -26,17 +20,17 @@ def main(*args, **kw):
     logger.error('error message')
     try:
         raise ValueError('Forced program exception')
-    except BaseException, e:
+    except BaseException as e:
         logger.exception('exception message: %s' % e)
     logger.critical('critical message')
 
 
 def logging_set_trace(*args, **kw):
-    print 'TESTING pdb.set_trace() called: %r, %r' % (args, kw)
+    print('TESTING pdb.set_trace() called: %r, %r' % (args, kw))
 
 
 def logging_interaction(*args, **kw):
-    print 'TESTING pdb.interaction() called: %r, %r' % (args, kw)
+    print('TESTING pdb.interaction() called: %r, %r' % (args, kw))
 
 
 def quitting_set_trace(*args, **kw):
@@ -70,24 +64,24 @@ def excepting_interaction(*args, **kw):
 
 
 isatty_value = True
+
+
 def isatty(self):
     return isatty_value
 
 
 def setUpPdb(test):
-    testing_handler = loggingsupport.InstalledHandler('instrumenting')
     test.globs.update(
         stdin=sys.stdin, stdout=sys.stdout,
         orig_isatty=_SpoofOut.isatty,
         orig_set_trace=pdb.Pdb.set_trace,
         orig_interaction=pdb.Pdb.interaction,
-        logger=logger,
-        testing_handler=testing_handler)
+        logger=logger)
     _SpoofOut.isatty = isatty
     pdb.Pdb.set_trace = logging_set_trace
     pdb.Pdb.interaction = logging_interaction
-    
-    
+
+
 def tearDownPdb(test):
     for handler in root.handlers:
         if isinstance(handler, instrumenting.PdbHandler):
@@ -99,8 +93,6 @@ def tearDownPdb(test):
     global isatty_value
     isatty_value = True
 
-
-import traceback
 
 class StackCondition(object):
 
@@ -151,7 +143,7 @@ def threaded_inner_main(*args, **kw):
     thread_sync.release()
     try:
         raise ValueError('Forced program exception')
-    except BaseException, e:
+    except BaseException as e:
         logger.exception('exception message: %s' % e)
     logger.critical('critical message')
 
@@ -179,9 +171,7 @@ def threaded_main():
 
 
 def setUpProfiling(test):
-    testing_handler = loggingsupport.InstalledHandler('instrumenting')
-    test.globs.update(logger=logger, testing_handler=testing_handler,
-                      tmp=tempfile.mkdtemp())
+    test.globs.update(logger=logger, tmp=tempfile.mkdtemp())
 
 
 def tearDownProfiling(test):

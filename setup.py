@@ -22,18 +22,17 @@ from setuptools import setup, find_packages
 version = '0.1'
 
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
-import instrumenting
+import instrumenting  # noqa
 
 README = open(os.path.join(os.path.dirname(__file__), 'README.rst')).read()
-HISTORY = open(os.path.join(os.path.dirname(__file__), 'HISTORY.txt')).read()
-
-tests_require = ['zope.testing']
+HISTORY = open(os.path.join(os.path.dirname(__file__), 'HISTORY.rst')).read()
 
 setup(name='instrumenting',
       version=version,
       description=instrumenting.__doc__,
-      long_description=README+'\n\n'+HISTORY,
-      # Get more strings from http://www.python.org/pypi?%3Aaction=list_classifiers
+      long_description=README + '\n\n' + HISTORY,
+      # Get more strings from
+      # http://www.python.org/pypi?%3Aaction=list_classifiers
       classifiers=[
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
@@ -48,11 +47,11 @@ setup(name='instrumenting',
       include_package_data=True,
       install_requires=[
           'setuptools',
-          # -*- Extra requirements: -*-
+
+          'six',  # BBB: Python 2 compatibility
       ],
-      test_suite = "instrumenting.tests.test_suite",
-      tests_require=tests_require,
-      extras_require={'test': tests_require},
+      test_suite="instrumenting.tests.test_suite",
+      setup_requires=["setuptools_git >= 0.3", ],
       entry_points="""
       # -*- Entry points: -*-
       """,

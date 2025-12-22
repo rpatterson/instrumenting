@@ -27,7 +27,7 @@ regular expression.
 
     >>> testing.main()
     TESTING pdb.interaction() called: (<pdb.Pdb instance at 0x...>, None, <traceback object at 0x...>), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -53,7 +53,7 @@ the expression.
     >>> testing.main()
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -82,7 +82,7 @@ logging frames source file and line number.
 
     >>> testing.main()
     TESTING pdb.set_trace() called: (<pdb.Pdb instance at 0x...>, <frame object at 0x...>), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO

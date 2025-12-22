@@ -3,11 +3,7 @@ import logging
 import profile
 import pstats
 
-try:
-    import cStringIO as StringIO
-    StringIO  # pyflakes
-except ImportError:
-    import StringIO
+from six.moves import cStringIO as StringIO
 
 from instrumenting import utils
 

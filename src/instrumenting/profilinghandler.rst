@@ -22,7 +22,7 @@ printed to stderr.  The program logs messages at all logging levels
 and also logs an exception.
 
     >>> testing.threaded_main()
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -79,7 +79,7 @@ continues as it did before.  Note that the logging is configured in
 the main thread but takes effect in child threads.
 
     >>> testing.threaded_main()
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting INFO
@@ -123,7 +123,7 @@ default.
     ...
     >>> pos = open('instrumenting.prof').tell()
 
-The thread that doesn't log any matched messages is profiled.
+The thread that doesn't log any matched messages is ???NOT??? profiled.
 
     >>> import re
     >>> import StringIO
@@ -152,7 +152,7 @@ threads are profiled.
     TESTING stopped profiling: (TODO,), {}
     TESTING not profiling: (TODO,), {}
     TESTING not profiling: (TODO,), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
@@ -199,7 +199,7 @@ profiling of multiple execution paths separately.
     TESTING stopped profiling: (TODO,), {}
     TESTING not profiling: (TODO,), {}
     TESTING not profiling: (TODO,), {}
-    >>> print testing_handler
+    >>> print(testing_handler)
     instrumenting.testing DEBUG
       debug message
     instrumenting.testing INFO
